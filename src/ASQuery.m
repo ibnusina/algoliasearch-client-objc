@@ -366,8 +366,11 @@
     if (aroundRadiusSet) {
         if ([stringBuilder length] > 0)
             [stringBuilder appendString:@"&"];
-
-        [stringBuilder appendFormat:@"aroundRadius=%zd", self.aroundRadius];
+        if (self.aroundRadius <= 0 || self.aroundRadius >= UINT_MAX) {
+            [stringBuilder appendString:@"aroundRadius=all"];
+        } else {
+            [stringBuilder appendFormat:@"aroundRadius=%zd", self.aroundRadius];
+        }
     }
     if (aroundPrecisionSet) {
         if ([stringBuilder length] > 0)
